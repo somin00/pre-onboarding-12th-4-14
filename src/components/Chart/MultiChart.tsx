@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import {
   Chart as ChartJS,
@@ -14,9 +14,11 @@ import {
   Filler,
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
-import { ChartDataType } from 'types';
+import { ChartDataWithRegionType } from 'types';
 
-import { makeChartData, options } from 'utils/makeChartdata';
+import { OPTIONS } from 'constants/chartOptions';
+import useChartSelect from 'hooks/useChartSelect';
+import { makeChartData } from 'utils/makeChartdata';
 
 ChartJS.register(
   LinearScale,
@@ -31,9 +33,25 @@ ChartJS.register(
   Filler,
 );
 
-function MultiChart({ labelData, areaData, barData }: ChartDataType) {
-  const chartData = makeChartData({ labelData, areaData, barData });
-  return <Chart type='bar' options={options} data={chartData} width='1000px' height='500px' />;
+interface MultiChartPropsType extends ChartDataWithRegionType {
+  setRegion: Dispatch<SetStateAction<string>>;
+}
+
+function MultiChart({ labelData, areaData, barData, region, setRegion }: MultiChartPropsType) {
+  const chartData = makeChartData({ labelData, areaData, barData, region });
+  const { chartRef, clickChartBar } = useChartSelect({ barData, setRegion });
+
+  return (
+    <Chart
+      ref={chartRef}
+      onClick={clickChartBar}
+      type='bar'
+      options={OPTIONS}
+      data={chartData}
+      width='1000px'
+      height='500px'
+    />
+  );
 }
 
 export default MultiChart;
