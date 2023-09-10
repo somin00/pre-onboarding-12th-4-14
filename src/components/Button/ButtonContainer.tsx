@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, MouseEvent, SetStateAction } from 'react';
 
 import styled from 'styled-components';
 
@@ -10,8 +10,20 @@ interface ButtonContainerPropsType {
   setSelectedRegion: Dispatch<SetStateAction<string>>;
 }
 function ButtonContainer({ regions, selectedRegion, setSelectedRegion }: ButtonContainerPropsType) {
+  const clickRegionButton = (e: MouseEvent<HTMLUListElement>) => {
+    const target = e.target as Node;
+    const text = target.textContent;
+    if (target.nodeName !== 'BUTTON') return;
+    if (text === '선택취소') {
+      setSelectedRegion('');
+      return;
+    }
+    if (text) {
+      setSelectedRegion(text);
+    }
+  };
   return (
-    <ButtonContainerWrapper>
+    <ButtonContainerWrapper onClick={clickRegionButton}>
       {regions.map(region => {
         const isSelected = selectedRegion === region;
         return <RegionButton key={region} value={region} isSelected={isSelected} />;

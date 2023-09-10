@@ -1,43 +1,11 @@
-import { ChartDataType } from 'types';
+import { ChartDataWithRegionType } from 'types';
 
-export const options = {
-  responsive: false,
-  stacked: false,
-  scales: {
-    y: {
-      type: 'linear' as const,
-      display: true,
-      position: 'left' as const,
-
-      title: {
-        display: true,
-        text: 'Bar',
-        font: {
-          size: 15,
-        },
-      },
-    },
-    y1: {
-      type: 'linear' as const,
-      display: true,
-      position: 'right' as const,
-      suggestedMin: 0,
-      suggestedMax: 150,
-      ticks: {
-        stepSize: 10,
-      },
-      title: {
-        display: true,
-        text: 'Area',
-        font: {
-          size: 15,
-        },
-      },
-    },
-  },
-};
-
-export const makeChartData = ({ labelData, areaData, barData }: ChartDataType) => {
+export const makeChartData = ({
+  labelData,
+  areaData,
+  barData,
+  region,
+}: ChartDataWithRegionType) => {
   const chartData = {
     labels: labelData,
     datasets: [
@@ -45,11 +13,10 @@ export const makeChartData = ({ labelData, areaData, barData }: ChartDataType) =
         type: 'line' as const,
         label: 'Area',
         yAxisID: 'y1',
-        data: areaData,
+        data: areaData.map(data => data.area),
         fill: true,
         backgroundColor: 'rgba(255, 175, 163, 0.3)',
         borderColor: 'rgb(255, 152, 152)',
-        border: 1,
         pointBackgroundColor: 'rgb(255, 152, 152)',
         hoverBackgroundColor: 'red',
       },
@@ -57,8 +24,11 @@ export const makeChartData = ({ labelData, areaData, barData }: ChartDataType) =
         type: 'bar' as const,
         label: 'Bar',
         yAxisID: 'y',
-        data: barData,
-        backgroundColor: 'rgb(170, 214, 255)',
+        data: barData.map(data => data.bar),
+        backgroundColor: barData.map(data => {
+          if (data.id === region) return '#1a5bff';
+          else return 'rgb(170, 214, 255)';
+        }),
       },
     ],
   };
