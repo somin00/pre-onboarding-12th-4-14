@@ -16,9 +16,8 @@ import {
 import { Chart } from 'react-chartjs-2';
 import { ChartDataWithRegionType } from 'types';
 
-import { OPTIONS } from 'constants/chartOptions';
 import useChartSelect from 'hooks/useChartSelect';
-import { makeChartData } from 'utils/makeChartdata';
+import { makeChartData, makeChartOptions } from 'utils/makeChartdata';
 
 ChartJS.register(
   LinearScale,
@@ -39,6 +38,7 @@ interface MultiChartPropsType extends ChartDataWithRegionType {
 
 function MultiChart({ labelData, areaData, barData, region, setRegion }: MultiChartPropsType) {
   const chartData = makeChartData({ labelData, areaData, barData, region });
+  const options = makeChartOptions(barData);
   const { chartRef, clickChartBar } = useChartSelect({ barData, setRegion });
 
   return (
@@ -46,7 +46,7 @@ function MultiChart({ labelData, areaData, barData, region, setRegion }: MultiCh
       ref={chartRef}
       onClick={clickChartBar}
       type='bar'
-      options={OPTIONS}
+      options={options}
       data={chartData}
       width='1000px'
       height='500px'
