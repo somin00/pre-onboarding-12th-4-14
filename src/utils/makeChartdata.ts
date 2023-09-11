@@ -26,8 +26,7 @@ export const makeChartData = ({
         yAxisID: 'y',
         data: barData.map(data => data.bar),
         backgroundColor: barData.map(data => {
-          if (data.id === region) return '#1a5bff';
-          else return 'rgb(170, 214, 255)';
+          return data.id === region ? '#1a5bff' : 'rgb(170, 214, 255)';
         }),
       },
     ],
