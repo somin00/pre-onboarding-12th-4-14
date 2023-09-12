@@ -1,4 +1,4 @@
-import { ChartOptions } from 'chart.js';
+import { Chart, ChartOptions } from 'chart.js';
 import { BarDataType, ChartDataWithRegionType } from 'types';
 
 export const makeChartOptions = (barData: BarDataType[]) => {
@@ -19,7 +19,19 @@ export const makeChartOptions = (barData: BarDataType[]) => {
         align: 'start' as const,
         labels: {
           usePointStyle: true,
-          pointStyle: 'rectRounded',
+          generateLabels: (chart: Chart) => {
+            const datasets = chart.data.datasets;
+            const labels = [datasets[0].label, datasets[1].label];
+            const newLabels = labels.map((property, index) => {
+              const color = index === 0 ? 'rgb(255, 152, 152)' : 'rgb(170, 214, 255)';
+              return {
+                text: property ?? '',
+                strokeStyle: color,
+                fillStyle: color,
+              };
+            });
+            return newLabels;
+          },
         },
       },
       tooltip: {
