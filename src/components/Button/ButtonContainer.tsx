@@ -1,4 +1,4 @@
-import React, { Dispatch, MouseEvent, SetStateAction } from 'react';
+import React, { MouseEvent } from 'react';
 
 import styled from 'styled-components';
 
@@ -7,21 +7,9 @@ import RegionButton from './RegionButton';
 interface ButtonContainerPropsType {
   regions: string[];
   selectedRegion: string;
-  setSelectedRegion: Dispatch<SetStateAction<string>>;
+  clickRegionButton: (e: MouseEvent<HTMLUListElement>) => void;
 }
-function ButtonContainer({ regions, selectedRegion, setSelectedRegion }: ButtonContainerPropsType) {
-  const clickRegionButton = (e: MouseEvent<HTMLUListElement>) => {
-    const target = e.target as Node;
-    const text = target.textContent;
-    if (target.nodeName !== 'BUTTON') return;
-    if (text === '선택취소') {
-      setSelectedRegion('');
-      return;
-    }
-    if (text) {
-      setSelectedRegion(text);
-    }
-  };
+function ButtonContainer({ regions, selectedRegion, clickRegionButton }: ButtonContainerPropsType) {
   return (
     <ButtonContainerWrapper onClick={clickRegionButton}>
       {regions.map(region => {
