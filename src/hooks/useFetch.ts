@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import { ChartDataType } from 'types';
+import { ChartDataWithRegionsType } from 'types';
 
 import { expressData } from 'utils/expressData';
 
 function useFetch() {
-  const [chartData, setChartData] = useState<ChartDataType | null>(null);
+  const [chartData, setChartData] = useState<ChartDataWithRegionsType | null>(null);
   useEffect(() => {
     fetch('/data/mockData.json')
       .then(res => res.json())

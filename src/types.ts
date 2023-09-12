@@ -16,12 +16,12 @@ export interface ChartDataType {
   labelData: string[];
   areaData: AreaDataType[];
   barData: BarDataType[];
+}
+
+export interface ChartDataWithRegionsType extends ChartDataType {
   regions: string[];
 }
 
-export interface ChartDataWithRegionType {
-  labelData: string[];
-  areaData: AreaDataType[];
-  barData: BarDataType[];
+export interface ChartDataWithRegionType extends ChartDataType {
   region: string;
 }
