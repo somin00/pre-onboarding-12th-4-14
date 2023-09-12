@@ -9,3 +9,20 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  width: 70px;
+  height: 30px;
+  border: 2px solid gray;
+  border-radius: 30px;
+  font-size: 14px;
+  background-color: #ffffff;
+}
